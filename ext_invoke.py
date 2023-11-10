@@ -20,5 +20,5 @@ def Command(func):
         req = {}
         if request.json is not None:
             req = request.json
-        return await func(cls, **request.json)
+        return await func(cls, **req)
     return wrapper
