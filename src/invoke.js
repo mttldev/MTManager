@@ -6,7 +6,7 @@
  * @param {object} args 引数
  */
 export const invoke = async (command, args) => {
-    const fetch_result = await fetch(`/invoke/${command}`, {
+    const fetch_result = await fetch(`/api/${command}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
