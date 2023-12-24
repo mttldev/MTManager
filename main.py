@@ -1,19 +1,17 @@
-import sanic
-from sanic import response, Request
+import frontend
+import backend
 
-import commands
+import multiprocessing
 
-app = sanic.Sanic(__name__)
+def main():
+    backend_process = multiprocessing.Process(target=backend.main)
+    frontend_process = multiprocessing.Process(target=frontend.main)
 
-commands.Commands(app=app)
+    backend_process.start()
+    frontend_process.start()
 
-@app.route("/")
-async def index(_: Request):
-    return await response.file("src/index.html")
-
-@app.route("/<path>")
-async def path_files(_: Request, path: str):
-    return await response.file(f"src/{path}")
+    frontend_process.join()
+    backend_process.kill()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=35416)
+    main()

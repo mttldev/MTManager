@@ -9,7 +9,7 @@ class Cog:
         for command in dir(self):
             if command.startswith("_") or command.endswith("__"):
                 continue
-            app.add_route(getattr(self, command), f"/api/{command}", methods=["POST"])
+            app.add_route(getattr(self, command), f"/api/{command}", methods=["POST"], name=command)
             self.__registed.append(command)
 
 def Invoke(value, error = None):
