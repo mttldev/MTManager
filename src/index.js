@@ -4,6 +4,9 @@ const init = async () => {
     const game = await invoke("get_game", { path: localStorage.getItem("gamepath") });
     document.getElementById("gametitle").innerHTML = game.title;
     document.getElementById("gameversion").innerHTML = game.version;
+    document.getElementById("remove-cache").onclick = remove_cache;
+    document.getElementById("start-game").onclick = start_game;
+    document.getElementById("app").classList.remove("hidden");
 }
 
 window.onload = async () => {
@@ -41,4 +44,21 @@ window.onload = async () => {
         }
     }
     await init();
+}
+
+const remove_cache = async () => {
+    try {
+        await invoke("remove_cache", { path: localStorage.getItem("gamepath") });
+        alert("キャッシュを削除しました。");
+    } catch (e) {
+        alert("キャッシュの削除に失敗しました。\n" + e.message);
+    }
+}
+
+const start_game = async () => {
+    try {
+        await invoke("start_game", { sdk: localStorage.getItem("renpysdk"), path: localStorage.getItem("gamepath") });
+    } catch (e) {
+        alert("ゲームの起動に失敗しました。\n" + e.message);
+    }
 }

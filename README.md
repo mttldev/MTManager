@@ -9,12 +9,12 @@
 ```py
 import sanic
 
-from ext_invoke import Cog, Invoke, Command
+from bridge import Cog, Command
 
 class TestCog(Cog):
     @Command
     async def greet(self, name: str) -> str:
-        return Invoke(f"Hello, {name}!")
+        return f"Hello, {name}!"
 
 app = sanic.Sanic(__name__)
 
@@ -32,4 +32,3 @@ import { invoke } from "./invoke.js";
     console.log(greet); // "Hello, NattyanTV!"
 })();
 ```
-

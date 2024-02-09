@@ -1,12 +1,13 @@
-import commands
+import click
+import sys
 import sanic
 from sanic import response, Request
 
-PORT = 8000
+import mtmanger
 
 app = sanic.Sanic(__name__)
 
-commands.Commands(app=app)
+mtmanger.setup(app)
 
 @app.route("/")
 async def index(_: Request):
@@ -16,8 +17,16 @@ async def index(_: Request):
 async def path_files(_: Request, path: str):
     return await response.file(f"src/{path}")
 
-def main():
-    app.run(host="0.0.0.0", port=PORT)
+@app.post("/close")
+async def close(_: Request):
+    app.stop()
+    return response.text("OK")
+
+@click.command()
+@click.option("--host", "-h", required=True)
+@click.option("--port", "-p", required=True, type=int)
+def main(host, port):
+    app.run(host=host, port=port)
 
 if __name__ == "__main__":
     print("Starting backend...")

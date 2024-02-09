@@ -1,4 +1,40 @@
+body {
+    background: #d2e4f8;
+}
+
 #app {
     max-width: 50rem;
     margin: 0 auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.error-detail {
+    color: red;
+    font-size: 0.8rem;
+}
+
+#start-button {
+    text-align: center;
+}
+
+button {
+    background: #ffffff;
+    border: 1px solid #f8f8f8;
+    border-radius: 2px;
+    box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background: #f8f8f8;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.8);
+}
+
+#start-game {
+    font-size: larger;
+    padding: 16px 128px;
 }

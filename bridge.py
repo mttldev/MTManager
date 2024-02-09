@@ -12,13 +12,24 @@ class Cog:
             app.add_route(getattr(self, command), f"/api/{command}", methods=["POST"], name=command)
             self.__registed.append(command)
 
-def Invoke(value, error = None):
-    return json({"error": error, "value": value})
+class Invoke:
+    def __init__(self, value, error = None) -> None:
+        self.value = value
+        self.error = error
+
+    def serialize(self):
+        return json({"error": self.error, "value": self.value})
 
 def Command(func):
     async def wrapper(cls: Cog, request: Request, *args, **kwargs):
         req = {}
         if request.json is not None:
             req = request.json
-        return await func(cls, **req)
+        try:
+            result = await func(cls, **req)
+            if isinstance(result, Invoke):
+                return result.serialize()
+            return Invoke(result).serialize()
+        except Exception as e:
+            return Invoke(None, str(e)).serialize()
     return wrapper
