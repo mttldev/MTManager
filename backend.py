@@ -4,8 +4,10 @@ import sanic
 from sanic import response, Request
 
 import mtmanger
+import bridge
 
 app = sanic.Sanic(__name__)
+bridge.setup(app)
 
 mtmanger.setup(app)
 

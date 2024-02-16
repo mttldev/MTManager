@@ -2,6 +2,8 @@ import sanic
 from sanic import Request
 from sanic.response import json
 
+from tkinter import filedialog
+
 class Cog:
     __registed = []
 
@@ -33,3 +35,15 @@ def Command(func):
         except Exception as e:
             return Invoke(None, str(e)).serialize()
     return wrapper
+
+class DefaultCommans(Cog):
+    @Command
+    async def open_file_dialog(self, title: str | None = None, filetypes: list[tuple[str, str]] | None = None, initialdir: str | None = None) -> str | None:
+        return filedialog.askopenfilename(title=title, filetypes=filetypes, initialdir=initialdir)
+
+    @Command
+    async def open_directory_dialog(self, title: str | None = None, initialdir: str | None = None, mustexist: bool = True) -> str | None:
+        return filedialog.askdirectory(title=title, initialdir=initialdir, mustexist=mustexist)
+
+def setup(app: sanic.Sanic):
+    DefaultCommans(app)

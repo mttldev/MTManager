@@ -1,8 +1,8 @@
 import os
 import json
 import glob
+import sanic
 import subprocess
-import typing
 import platform
 
 from bridge import Cog, Command
@@ -13,7 +13,7 @@ def get_renpy_cmd(sdk: str) -> list[str]:
     elif platform.system() == "Linux":
         return ["bash", os.path.join(sdk, "renpy.sh")]
     else:
-        raise NotImplementedError(f"Unsupported system: {platform.system()}")
+        raise NotImplementedError("Unsupported system: {}".format(platform.system()))
 
 class Commands(Cog):
     @Command
@@ -47,5 +47,5 @@ class Commands(Cog):
             raise Exception("SDK not found")
         subprocess.Popen(get_renpy_cmd(sdk) + [path])
 
-def setup(app):
+def setup(app: sanic.Sanic):
     Commands(app)
