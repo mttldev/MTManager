@@ -26,7 +26,7 @@ export const invoke = async (command, args) => {
 /**
  * バックエンドに要求して、ファイル選択ダイアログを開きます。
  * @param {string} title ダイアログのタイトル
- * @param {[string][][]} filetypes ファイルの種類
+ * @param {[string, string][]} filetypes ファイルの種類
  * @param {string} initialdir 初期ディレクトリ
  * @returns {string} 選択されたファイルのパス
  */

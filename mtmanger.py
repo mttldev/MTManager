@@ -11,7 +11,7 @@ def get_renpy_cmd(sdk: str) -> list[str]:
     if platform.system() == "Windows":
         return [os.path.join(sdk, "lib/py3-windows-x86_64/python.exe"), os.path.join(sdk, "renpy.py")]
     elif platform.system() == "Linux":
-        return ["bash", os.path.join(sdk, "renpy.sh")]
+        return ["sh", os.path.join(sdk, "renpy.sh")]
     else:
         raise NotImplementedError("Unsupported system: {}".format(platform.system()))
 
